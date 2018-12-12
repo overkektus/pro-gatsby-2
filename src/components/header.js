@@ -1,34 +1,42 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import styled from 'styled-components'
-import gatsbyMyLogo from '../images/gatsby-icon.png'
+import { Link } from 'gatsby'
+import someLogo from '../images/phoenix-seeklogo_2.svg'
 
 const Root = styled.div`
   background: #524763;
+  margin-bottom: 0;
 `
 
 const Container = styled.div`
   margin: 0 auto;
-  max-width: 960px;
+  maxwidth: 960px;
   padding: 1rem;
+  color: white;
+
   img {
-    width: 100px;
-    margin-bottom: 0;
+    width: 80px;
+    margin: 20px 20px 0;
   }
 `
 
 const StyledLink = styled(Link)`
-  color: 'white';
-  text-decoration: 'none';
+  color: white;
+  text-decoration: none;
+`
+const StyledH1 = styled.h1`
+  color: white;
 `
 
 const Header = ({ siteTitle }) => (
   <Root>
     <Container>
-      <img src={gatsbyMyLogo} alt="gatsby logo" />
-      <h1 style={{ margin: 0 }}>
-        <StyledLink to="/">{siteTitle}</StyledLink>
-      </h1>
+      <StyledH1>
+        <StyledLink to="/">
+          <img src={someLogo} alt="Some Logo" />
+          {siteTitle}
+        </StyledLink>
+      </StyledH1>
     </Container>
   </Root>
 )

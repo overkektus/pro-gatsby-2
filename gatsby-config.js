@@ -1,23 +1,25 @@
 module.exports = {
   siteMetadata: {
-    title: '!!!!Gatsby Default Starter',
-    description: 'some description',
+    title: 'Gatsby Default Starter',
+    description: 'New super blog!',
+    siteUrl: 'https://somth.com',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sitemap',
     'gatsby-plugin-styled-components',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'images',
-        path: '${__dirname}/src/images',
+        name: 'posts',
+        path: `${__dirname}/src/posts`,
       },
     },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'posts',
-        path: '${__dirname}/src/posts',
+        name: 'images',
+        path: `${__dirname}/src/images`,
       },
     },
     'gatsby-transformer-sharp',
@@ -35,9 +37,10 @@ module.exports = {
       },
     },
     'gatsby-transformer-remark',
+    'gatsby-plugin-netlify-cms',
+    'gatsby-plugin-netlify',
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.app/offline
     // 'gatsby-plugin-offline',
-    'gatsby-plugin-netlify',
   ],
 }

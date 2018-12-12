@@ -1,25 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import { StaticQuery, graphql } from 'gatsby'
+import Img from 'gatsby-image'
 import styled from 'styled-components'
 import { Spring } from 'react-spring'
-import Img from 'gatsby-image'
-import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
+import Archive from './Archive'
 import './layout.css'
-import { hidden } from 'ansi-colors'
 
 const StyledMain = styled.main`
   margin: 0 auto;
   max-width: 90%;
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 3fr 1fr;
   grid-gap: 40px;
+  padding-top: 40px;
 `
+const from = { height: 140 }
 
-const from = { height: 100 }
-
-const to = { height: 200 }
+const to = { height: 300 }
 
 const Layout = ({ children, location }) => (
   <StaticQuery
@@ -31,23 +31,22 @@ const Layout = ({ children, location }) => (
             description
           }
         }
-        allMarkdownRemark {
-          edges {
-            node {
-              html
-              excerpt(pruneLength: 50)
-              frontmatter {
-                title
-                slug
-                date(formatString: "DD-MM-YYYY")
-              }
-            }
-          }
-        }
-        file(relativePath: { regex: "/Hon/" }) {
+        file(relativePath: { regex: "/unsp/" }) {
           childImageSharp {
             fluid(maxWidth: 1000) {
               ...GatsbyImageSharpFluid_tracedSVG
+            }
+          }
+        }
+        allMarkdownRemark {
+          edges {
+            node {
+              excerpt(pruneLength: 10)
+              html
+              frontmatter {
+                title
+                date(formatString: "MMMM DD, YYYY")
+              }
             }
           }
         }
@@ -58,16 +57,14 @@ const Layout = ({ children, location }) => (
         <Helmet
           title={data.site.siteMetadata.title}
           meta={[
-            {
-              name: 'description',
-              content: data.site.siteMetadata.description,
-            },
+            { name: 'description', content: data.site.siteMetadata.description },
             { name: 'keywords', content: 'sample, something' },
           ]}
         >
           <html lang="en" />
         </Helmet>
         <Header siteTitle={data.site.siteMetadata.title} />
+        {/* {location.pathname === '/' && <Img fluid={data.file.childImageSharp.fluid} />} */}
         <Spring
           from={location.pathname === '/' ? from : to}
           to={location.pathname === '/' ? to : from}
@@ -78,11 +75,9 @@ const Layout = ({ children, location }) => (
             </div>
           )}
         </Spring>
-        {/* {location.pathname === '/' && (
-        )} */}
         <StyledMain>
-          {/* {console.log(data.allMarkdownRemark.edges[0].node.frontmatter.date)} */}
           <div>{children}</div>
+          <Archive />
         </StyledMain>
       </>
     )}
@@ -93,8 +88,9 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
+// const isBrowser() => typeof window !== 'undefined'
 Layout.defaultProps = {
-  location: {}
+  location: {},
 }
 
 export default Layout

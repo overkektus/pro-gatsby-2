@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { graphql } from 'gatsby'
 import Layout from './layout'
+import { graphql } from 'gatsby'
 
-// Static Query
-// Used anywhere, doesn't accept variables, can't used context
+// Statis Query
+// Used anywhere, doesn't accept variables, can'r use context
 
 // Page Query
 // Must be used on pages
@@ -17,12 +17,8 @@ class PostLayout extends Component {
     return (
       <Layout location={location}>
         <h1>{markdownRemark.frontmatter.title}</h1>
-        <div>{Date(markdownRemark.frontmatter.date).toLocaleString()}</div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: markdownRemark.html,
-          }}
-        />
+        <div>{markdownRemark.frontmatter.date}</div>
+        <div dangerouslySetInnerHTML={{ __html: markdownRemark.html }} />
       </Layout>
     )
   }
@@ -35,9 +31,9 @@ export const query = graphql`
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
-        slug
         title
-        date
+        date(formatString: "MMMM DD, YYYY")
+        slug
       }
     }
   }
